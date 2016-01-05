@@ -1,5 +1,10 @@
 {
+  "name": "techery/orientdb-php",
+  "description": "Research project for OrientDB",
+  "license": "MIT",
+  "type": "project",
   "require": {
-    "ostico/phporient": "dev-master"
+    "ostico/phporient": "dev-master",
+    "vlucas/phpdotenv": "~1.0"
   }
 }
