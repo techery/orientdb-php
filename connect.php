@@ -6,7 +6,7 @@ use PhpOrient\Protocols\Binary\Data\Record;
 
 Dotenv::load(__DIR__);
 
-$dbName = getenv('DB_USERNAME')?: 'Users';
+$dbName = getenv('DB_DATABASE')?: 'Users';
 
 $config = [
     'username' => getenv('DB_USERNAME') ?: 'root',
