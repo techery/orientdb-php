@@ -36,7 +36,7 @@ $userType = 'Guest';
 
 $client->command("insert into {$dbName} set name = '{$userName}', type = '{$userType}'");
 
-$users = $client->query('select from Users');
+$users = $client->query("select from {$dbName}");
 
 /** @var  Record $user */
 foreach ($users as $user) {
