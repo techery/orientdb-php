@@ -4,33 +4,31 @@ require "vendor/autoload.php";
 use PhpOrient\PhpOrient;
 use PhpOrient\Protocols\Binary\Data\Record;
 
-$dbName = 'Users';
+Dotenv::load(__DIR__);
+
+$dbName = getenv('DB_USERNAME')?: 'Users';
 
 $config = [
-  'username' => 'root',
-  'password' => '0r13ntDB',
-  'hostname' => '172.17.42.1',
-  'port' => 2424,
+    'username' => getenv('DB_USERNAME') ?: 'root',
+    'password' => getenv('DB_PASSWORD') ?: '0r13ntDB',
+    'hostname' => getenv('DB_HOST') ?: '172.17.42.1',
+    'port'     => getenv('DB_PORT') ?: 2424,
 ];
 
 $client = new PhpOrient();
 $client->configure($config);
 $client->connect();
 
-if (!$client->dbExists($dbName))
-{
-  $client->dbCreate($dbName, PhpOrient::STORAGE_TYPE_MEMORY);
+if (!$client->dbExists($dbName)) {
+    $client->dbCreate($dbName, PhpOrient::STORAGE_TYPE_MEMORY);
 }
 
 $client->dbOpen($dbName, $config['username'], $config['password']);
 
-try
-{
-  $client->command('create class Users extends V');
-}
-catch (Exception $e)
-{
-  echo 'class Users already creates';
+try {
+    $client->command('create class Users extends V');
+} catch (Exception $e) {
+    echo 'class Users already creates';
 }
 
 $userName = mt_rand(1000, 100000);
@@ -41,7 +39,6 @@ $client->command("insert into {$dbName} set name = '{$userName}', type = '{$user
 $users = $client->query('select from Users');
 
 /** @var  Record $user */
-foreach ($users as $user)
-{
-  echo $user->getOData()['name'], PHP_EOL;
+foreach ($users as $user) {
+    echo $user->getOData()['name'], PHP_EOL;
 }
